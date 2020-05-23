@@ -7,18 +7,20 @@
 #include <string.h>
 #include <stdio.h>
 
+typedef unsigned int uint;
+
 class MyString {
 
     private:
         std::shared_ptr<char> _data;
+        uint _lenght;
 
 
     public:
-        MyString(const char* data) 
+        MyString(char* data, uint length) 
         {
-            size_t data_size = strlen(data);
-            _data = std::shared_ptr<char>(new char[data_size], std::default_delete<char[]>());
-            memcpy(_data.get(), data, data_size);
+            _lenght = length;
+            _data = std::shared_ptr<char>(data);
         }
 
         ~MyString() = default;
@@ -27,13 +29,16 @@ class MyString {
         MyString(const MyString& mat)
         {
             _data = mat._data;
+            _lenght = mat._lenght;
         }
 
         // move constructor
         MyString(MyString&& mat)
         {
             _data = std::move(mat._data);
+            _lenght = mat._lenght;
             mat._data = nullptr;
+            mat._lenght = 0;
             // TODO set all meta data to null
         }
 
@@ -41,6 +46,7 @@ class MyString {
         MyString& operator=(MyString& other)
         {
             _data = other._data;
+            _lenght = other._lenght;
             return *this;
         }
 
@@ -48,13 +54,25 @@ class MyString {
         MyString& operator=(MyString&& other)
         {
             _data = std::move(other._data);
+            _lenght = other._lenght;
+            other._lenght = 0;
             other._data = nullptr;
             return *this;
         }
 
+        const char* get_data(uint pos) const
+        {
+            return &(_data.get()[pos]);
+        } 
+
         const char* get_data() const
         {
             return _data.get();
+        }
+
+        const uint size() const
+        {
+            return _lenght;
         }
 
         friend std::ostream& operator<<(std::ostream& os, const MyString& str)

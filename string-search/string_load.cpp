@@ -12,10 +12,13 @@ MyString utils::read_string(const char* filepath) {
     size_t lenght = ifs.tellg();
     ifs.seekg(0, std::ios::beg);
 
+    // buffer
     char* data = new char[lenght];
     ifs.read(data, lenght);
     ifs.close();
 
     // data taken by smart pointer in custom string.
-    return MyString(data);
+    MyString string(data, lenght);
+
+    return string;
 }

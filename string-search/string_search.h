@@ -1,15 +1,19 @@
 #ifndef STRING_SEARCH_HG
 #define STRING_SEARCH_HG
 
-#include <iostream>
+#include "my_string.h"
 
-class Example {
+class Search {
+    private:
+    const MyString _data;
+    const MyString _pattern;
 
     public:
-        Example() {std::cout << "Creating example" << std::endl; }
-        ~Example() {std::cout << "Destroying example" << std::endl; }
-    private:
-    
-};
 
+    Search(const MyString& data, const MyString& pattern);
+    ~Search() = default;
+
+    void execute();
+
+};
 #endif // STRING_SEARCH_HG
