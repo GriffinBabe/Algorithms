@@ -3,6 +3,6 @@
 
 int main(int argc, char** argv)
 {
-    std::cout << "Hello world" << std::endl;
+    MyString string("Hello world");
     return 0;
 }

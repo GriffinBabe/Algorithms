@@ -21,15 +21,46 @@ class MyString {
             memcpy(_data.get(), data, data_size);
         }
 
-        ~MyString() 
+        ~MyString() = default;
+
+        // copy constructor
+        MyString(const MyString& mat)
         {
-
-
+            _data = mat._data;
         }
 
-        std::ostream& operator<<(std::ostream& os) 
+        // move constructor
+        MyString(MyString&& mat)
         {
-            return os << _data.get();
+            _data = std::move(mat._data);
+            mat._data = nullptr;
+            // TODO set all meta data to null
+        }
+
+        // Copy assignement
+        MyString& operator=(MyString& other)
+        {
+            _data = other._data;
+            return *this;
+        }
+
+        // move asigment
+        MyString& operator=(MyString&& other)
+        {
+            _data = std::move(other._data);
+            other._data = nullptr;
+            return *this;
+        }
+
+        const char* get_data() const
+        {
+            return _data.get();
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, const MyString& str)
+        {
+            os << str.get_data();
+            return os;
         }
 
 };

@@ -1,5 +1,5 @@
 CC = g++
-LDFLAGS =
+LDFLAGS = 
 CFLAGS = -std=c++17 -Wall
 EXEC = string_search.exe
 
