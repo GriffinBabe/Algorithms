@@ -5,7 +5,7 @@
 #include "my_string.h"
 
 namespace utils {
-    char* read_string(const char* file_path);
+    MyString read_string(const char* file_path);
 }
 
 #endif // STRING_LOAD_HG
