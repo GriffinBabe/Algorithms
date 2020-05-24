@@ -6,6 +6,7 @@
 #include <memory>
 #include <string.h>
 #include <stdio.h>
+#include <exception>
 
 typedef unsigned int uint;
 
@@ -60,12 +61,32 @@ class MyString {
             return *this;
         }
 
-        const char* get_data(uint pos) const
+        char operator [](uint index) const
         {
+            // range check during debugging only
+            #ifdef _DEBUG
+                if (index >= _lenght) {
+                    throw std::runtime_error("operator[] argument out of bounds");
+                }
+            #endif
+            return _data.get()[index];
+        }
+        
+        friend std::ostream& operator<<(std::ostream& os, const MyString& str)
+        {
+            os << str._data.get();
+            return os;
+        }
+
+        const char* get(uint pos)
+        {
+            if (pos >= _lenght) {
+                throw std::runtime_error("operator[] argument out of bounds");
+            }
             return &(_data.get()[pos]);
         } 
 
-        const char* get_data() const
+        const char* get()
         {
             return _data.get();
         }
@@ -73,12 +94,6 @@ class MyString {
         const uint size() const
         {
             return _lenght;
-        }
-
-        friend std::ostream& operator<<(std::ostream& os, const MyString& str)
-        {
-            os << str.get_data();
-            return os;
         }
 
 };
